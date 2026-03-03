@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme.dart';
-import '../widgets/smoke_particles.dart';
+
 import 'dart:math' as math;
 
 class TestimonialsSection extends StatelessWidget {
@@ -28,10 +28,7 @@ class TestimonialsSection extends StatelessWidget {
             ),
           ),
           
-          // Added Smoke Particles here
-          const Positioned.fill(
-            child: SmokeParticles(count: 40, color: AppTheme.accentColor),
-          ),
+
 
           // Main Content
           Column(

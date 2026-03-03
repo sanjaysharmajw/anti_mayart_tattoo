@@ -113,7 +113,7 @@ class _ArtistSectionState extends State<ArtistSection> with SingleTickerProvider
                         const SizedBox(height: 40),
                         
                         Text(
-                          'With over a decade of experience, Mayart leads the art of transforming stories and feelings into ink. The studio offers a luxurious environment, focusing on technical precision and service that values comfort.',
+                          'With over a decade of experience, Moses Valerius leads the art of transforming stories and feelings into ink. The studio offers a luxurious environment, focusing on technical precision and service that values comfort.',
                           style: GoogleFonts.inter(
                             fontSize: isMobile ? 14 : 16,
                             color: Colors.white,

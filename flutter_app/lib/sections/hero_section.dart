@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme.dart';
-import '../widgets/smoke_particles.dart';
+
 import 'dart:math' as math;
 
 class HeroSection extends StatefulWidget {
@@ -52,12 +52,7 @@ class _HeroSectionState extends State<HeroSection> with SingleTickerProviderStat
               ),
             ),
           ),
-            
-            // Smoke Particles Overlay
-            const Positioned.fill(
-              child: SmokeParticles(count: 60, color: AppTheme.accentColor),
-            ),
-          
+
           // 70% opacity black gradient overlay
           Container(
             decoration: BoxDecoration(
@@ -77,12 +72,17 @@ class _HeroSectionState extends State<HeroSection> with SingleTickerProviderStat
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 100),
+              const SizedBox(height: 60),
               
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Image.asset('assets/images/logo.png', height: isMobile ? 180 : 250),
+              ),
+
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: isMobile ? 30 : 100),
                 child: Text(
-                  'YOUR TATTOO JOURNEY INTO AN\nUNFORGETTABLE EXPERIENCE',
+                  'MOSES VALERIUS ARTIST',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.outfit(
                     fontSize: isMobile ? 36 : 64,
@@ -112,17 +112,6 @@ class _HeroSectionState extends State<HeroSection> with SingleTickerProviderStat
                     color: AppTheme.textSecondary,
                     fontWeight: FontWeight.w300,
                   ),
-                ),
-              ),
-              const SizedBox(height: 40),
-              
-              Text(
-                'MON - SAT  |  10:00 - 20:00',
-                style: GoogleFonts.inter(
-                  fontSize: 14,
-                  letterSpacing: 3,
-                  color: AppTheme.accentColor.withOpacity(0.8),
-                  fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 40),

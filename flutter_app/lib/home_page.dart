@@ -66,23 +66,7 @@ class _HomePageState extends State<HomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  RichText(
-                    text: TextSpan(
-                      style: GoogleFonts.outfit(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 2,
-                        color: Colors.white,
-                      ),
-                      children: const [
-                        TextSpan(text: 'MAYART'),
-                        TextSpan(
-                          text: '/INK',
-                          style: TextStyle(color: AppTheme.accentColor),
-                        ),
-                      ],
-                    ),
-                  ),
+                  Image.asset('assets/images/logo.png', height: 40),
                   if (MediaQuery.of(context).size.width > 768)
                     Row(
                       children: [
@@ -145,23 +129,7 @@ class _HomePageState extends State<HomePage> {
                 border: Border(bottom: BorderSide(color: AppTheme.accentColor.withOpacity(0.5), width: 1)),
               ),
               child: Center(
-                child: RichText(
-                  text: TextSpan(
-                    style: GoogleFonts.outfit(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 2,
-                      color: Colors.white,
-                    ),
-                    children: const [
-                      TextSpan(text: 'MAYART'),
-                      TextSpan(
-                        text: '/INK',
-                        style: TextStyle(color: AppTheme.accentColor),
-                      ),
-                    ],
-                  ),
-                ),
+                child: Image.asset('assets/images/logo.png', height: 50),
               ),
             ),
             ListTile(

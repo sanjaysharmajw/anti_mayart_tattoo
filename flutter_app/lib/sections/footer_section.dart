@@ -13,23 +13,7 @@ class FooterSection extends StatelessWidget {
       padding: EdgeInsets.only(top: isMobile ? 60 : 80, bottom: 40),
       child: Column(
         children: [
-          RichText(
-            text: TextSpan(
-              style: GoogleFonts.outfit(
-                fontSize: 32,
-                fontWeight: FontWeight.w900,
-                letterSpacing: 4,
-                color: Colors.white,
-              ),
-              children: const [
-                TextSpan(text: 'MAYART'),
-                TextSpan(
-                  text: '/INK',
-                  style: TextStyle(color: AppTheme.accentColor),
-                ),
-              ],
-            ),
-          ),
+          Image.asset('assets/images/logo.png', height: 80),
           const SizedBox(height: 30),
           
           Row(
@@ -62,7 +46,7 @@ class FooterSection extends StatelessWidget {
           const SizedBox(height: 40),
           
           Text(
-            '© 2026 Mayart Ink. All rights reserved.',
+            '© 2026 Moses Valerius Artist. All rights reserved.',
             style: GoogleFonts.inter(
               fontSize: 14,
               color: AppTheme.textSecondary,

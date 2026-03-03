@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme.dart';
-import '../widgets/smoke_particles.dart';
+
 
 class PortfolioPage extends StatelessWidget {
   const PortfolioPage({super.key});
@@ -34,10 +34,7 @@ class PortfolioPage extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          // Background Smoke
-          const Positioned.fill(
-            child: SmokeParticles(count: 30, color: AppTheme.accentColor),
-          ),
+
           
           SafeArea(
             child: SingleChildScrollView(
