@@ -27,7 +27,7 @@ class ServicesSection extends StatelessWidget {
                     Text(
                       'LATEST TATTOOS',
                       style: GoogleFonts.outfit(
-                        fontSize: 40,
+                        fontSize: isMobile ? 32 : 40,
                         fontWeight: FontWeight.w900,
                         color: Colors.white,
                         letterSpacing: 2,
@@ -37,7 +37,7 @@ class ServicesSection extends StatelessWidget {
                     Text(
                       'Explore our latest projects.',
                       style: GoogleFonts.inter(
-                        fontSize: 18,
+                        fontSize: isMobile ? 14 : 18,
                         color: AppTheme.textSecondary,
                         letterSpacing: 1,
                       ),
@@ -51,7 +51,7 @@ class ServicesSection extends StatelessWidget {
 
           // Horizontal Carousel
           SizedBox(
-            height: isMobile ? 350 : 450,
+            height: isMobile ? 250 : 350,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               physics: const PageScrollPhysics(), // Snap scroll feel
@@ -113,16 +113,16 @@ class _CarouselItemState extends State<_CarouselItem> {
       onExit: (_) => setState(() => _isHovering = false),
       cursor: SystemMouseCursors.click,
       child: Container(
-        width: MediaQuery.of(context).size.width < 768 ? 240 : 300,
+        width: MediaQuery.of(context).size.width < 768 ? 160 : 220,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(2),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(2),
                 child: AnimatedScale(
                   duration: const Duration(milliseconds: 600),
                   scale: _isHovering ? 1.05 : 1.0,
@@ -140,7 +140,7 @@ class _CarouselItemState extends State<_CarouselItem> {
                widget.label,
                style: GoogleFonts.outfit(
                  color: _isHovering ? AppTheme.accentColor : Colors.white,
-                 fontSize: 20,
+                 fontSize: MediaQuery.of(context).size.width < 768 ? 14 : 18,
                  fontWeight: FontWeight.w600,
                  letterSpacing: 1,
                ),
@@ -182,17 +182,10 @@ class _VerMaisButtonState extends State<_VerMaisButton> {
         },
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         decoration: BoxDecoration(
           color: AppTheme.accentColor,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: AppTheme.accentColor.withOpacity(_isHovering ? 0.6 : 0.2),
-              blurRadius: _isHovering ? 25 : 10,
-              offset: const Offset(0, 5),
-            )
-          ],
+          borderRadius: BorderRadius.circular(2),
         ),
         transform: _isHovering ? (Matrix4.identity()..translate(0.0, -3.0)) : Matrix4.identity(),
         child: Row(

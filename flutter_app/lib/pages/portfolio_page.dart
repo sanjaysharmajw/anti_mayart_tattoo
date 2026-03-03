@@ -159,7 +159,7 @@ class _PortfolioCardState extends State<_PortfolioCard> {
             duration: const Duration(milliseconds: 300),
             height: constraints.maxWidth * widget.item.ratio,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(2),
               border: Border.all(
                 color: _isHovering ? AppTheme.accentColor : Colors.white.withOpacity(0.05),
                 width: 2,
@@ -230,7 +230,7 @@ class _PortfolioCardState extends State<_PortfolioCard> {
                             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                             decoration: BoxDecoration(
                               color: AppTheme.accentColor,
-                              borderRadius: BorderRadius.circular(30),
+                              borderRadius: BorderRadius.circular(2),
                             ),
                             child: Text(
                               widget.item.category.toUpperCase(),

@@ -108,7 +108,7 @@ class _ContactForm extends StatelessWidget {
       padding: const EdgeInsets.all(30),
       decoration: BoxDecoration(
         color: AppTheme.bgDark.withOpacity(0.8),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(2),
         border: Border.all(color: AppTheme.accentColor.withOpacity(0.3), width: 1),
         boxShadow: [
           BoxShadow(
@@ -144,11 +144,11 @@ class _ContactForm extends StatelessWidget {
         filled: true,
         fillColor: Colors.white.withOpacity(0.05),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(2),
           borderSide: BorderSide(color: Colors.white.withOpacity(0.1)),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(2),
           borderSide: const BorderSide(color: AppTheme.accentColor),
         ),
       ),
@@ -176,7 +176,7 @@ class _SubmitButtonState extends State<_SubmitButton> {
         padding: const EdgeInsets.symmetric(vertical: 18),
         decoration: BoxDecoration(
           color: _isHovering ? Colors.transparent : AppTheme.accentColor,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(2),
           border: Border.all(color: AppTheme.accentColor, width: 2),
           boxShadow: _isHovering
               ? [

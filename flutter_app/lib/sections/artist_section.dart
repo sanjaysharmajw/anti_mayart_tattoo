@@ -81,7 +81,7 @@ class _ArtistSectionState extends State<ArtistSection> with SingleTickerProvider
                         Text(
                           'ABOUT',
                           style: GoogleFonts.outfit(
-                            fontSize: isMobile ? 48 : 72,
+                            fontSize: isMobile ? 32 : 48,
                             fontWeight: FontWeight.w900,
                             color: Colors.white,
                             letterSpacing: 4,
@@ -115,8 +115,8 @@ class _ArtistSectionState extends State<ArtistSection> with SingleTickerProvider
                         Text(
                           'With over a decade of experience, Mayart leads the art of transforming stories and feelings into ink. The studio offers a luxurious environment, focusing on technical precision and service that values comfort.',
                           style: GoogleFonts.inter(
-                            fontSize: isMobile ? 16 : 20,
-                            color: AppTheme.textSecondary,
+                            fontSize: isMobile ? 14 : 16,
+                            color: Colors.white,
                             height: 1.8,
                             fontWeight: FontWeight.w400,
                           ),
@@ -125,8 +125,8 @@ class _ArtistSectionState extends State<ArtistSection> with SingleTickerProvider
                         Text(
                           'We believe every tattoo is a masterpiece, developed with the highest quality materials and an unparalleled artistic eye. Our mission is to immortalize your journey on the skin with innovative design.',
                           style: GoogleFonts.inter(
-                            fontSize: isMobile ? 16 : 20,
-                            color: AppTheme.textSecondary,
+                            fontSize: isMobile ? 14 : 16,
+                            color: Colors.white,
                             height: 1.8,
                             fontWeight: FontWeight.w400,
                           ),
@@ -168,7 +168,7 @@ class _ImageLayer extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(2),
           border: Border.all(
             color: AppTheme.accentColor.withOpacity(0.3),
             width: 1,

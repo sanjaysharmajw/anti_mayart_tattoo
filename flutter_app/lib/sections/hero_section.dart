@@ -77,52 +77,7 @@ class _HeroSectionState extends State<HeroSection> with SingleTickerProviderStat
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Top Socials
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _SocialIcon(icon: Icons.camera_alt),
-                  const SizedBox(width: 20),
-                  _SocialIcon(icon: Icons.facebook),
-                  const SizedBox(width: 20),
-                  _SocialIcon(icon: Icons.chat),
-                ],
-              ),
-              const SizedBox(height: 40),
-              
-              // Glassmorphism Logo Card
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.03),
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.white.withOpacity(0.1)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppTheme.accentColor.withOpacity(0.1),
-                      blurRadius: 30,
-                    )
-                  ],
-                ),
-                child: RichText(
-                  text: TextSpan(
-                    style: GoogleFonts.outfit(
-                      fontSize: 32,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 4,
-                      color: Colors.white,
-                    ),
-                    children: const [
-                      TextSpan(text: 'MAYART'),
-                      TextSpan(
-                        text: '/INK',
-                        style: TextStyle(color: AppTheme.accentColor),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 60),
+              const SizedBox(height: 100),
               
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: isMobile ? 30 : 100),
@@ -242,17 +197,10 @@ class _CtaButtonState extends State<_CtaButton> {
         onTap: widget.onTap,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           decoration: BoxDecoration(
             color: AppTheme.accentColor,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: AppTheme.accentColor.withOpacity(_isHovering ? 0.6 : 0.3),
-                blurRadius: _isHovering ? 25 : 10,
-                offset: const Offset(0, 5),
-              )
-            ],
+            borderRadius: BorderRadius.circular(2),
           ),
           transform: _isHovering ? (Matrix4.identity()..translate(0.0, -3.0)) : Matrix4.identity(),
           child: Text(

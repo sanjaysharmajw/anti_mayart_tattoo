@@ -243,15 +243,8 @@ class _WhatsAppButtonState extends State<_WhatsAppButton> with SingleTickerProvi
           scale: 1.0 + (_pulseCtrl.value * 0.05),
           child: Container(
             margin: const EdgeInsets.only(bottom: 20, right: 20),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.greenAccent.withOpacity(0.4 + (_pulseCtrl.value * 0.2)),
-                  blurRadius: 20 + (_pulseCtrl.value * 10),
-                  spreadRadius: _pulseCtrl.value * 5,
-                )
-              ]
             ),
             child: FloatingActionButton(
                onPressed: () {},

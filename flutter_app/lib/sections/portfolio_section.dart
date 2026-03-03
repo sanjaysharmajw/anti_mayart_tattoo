@@ -11,7 +11,7 @@ class PortfolioSection extends StatelessWidget {
     bool isMobile = MediaQuery.of(context).size.width < 768;
     bool isTablet = MediaQuery.of(context).size.width >= 768 && MediaQuery.of(context).size.width < 1200;
     
-    int columns = isMobile ? 2 : (isTablet ? 3 : 4);
+    int columns = isMobile ? 3 : (isTablet ? 4 : 5);
     
     return Container(
       color: AppTheme.bgDark, // Slight dark grey (#121212)
@@ -21,7 +21,7 @@ class PortfolioSection extends StatelessWidget {
           Text(
             'PORTFOLIO',
             style: GoogleFonts.outfit(
-              fontSize: 48,
+              fontSize: isMobile ? 32 : 48,
               fontWeight: FontWeight.w900,
               color: Colors.white,
               letterSpacing: 4,
@@ -38,7 +38,7 @@ class PortfolioSection extends StatelessWidget {
             'Timeless artworks marked on the skin, exploring contrasts and realism.',
             textAlign: TextAlign.center,
             style: GoogleFonts.inter(
-              fontSize: 18,
+              fontSize: isMobile ? 14 : 18,
               color: AppTheme.textSecondary,
               letterSpacing: 1,
             ),
@@ -118,7 +118,7 @@ class _VerMaisButtonState extends State<_VerMaisButton> {
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
           decoration: BoxDecoration(
             color: Colors.transparent,
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(2),
             border: Border.all(
               color: _isHovering ? AppTheme.accentColor : Colors.white24,
               width: 2,
@@ -172,7 +172,7 @@ class _GridItemState extends State<_GridItem> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(2),
           border: Border.all(
             color: _isHovering ? AppTheme.accentColor : Colors.transparent,
             width: 2,
@@ -234,7 +234,7 @@ class _GridItemState extends State<_GridItem> {
                   widget.category,
                   style: GoogleFonts.outfit(
                     color: Colors.white,
-                    fontSize: MediaQuery.of(context).size.width < 768 ? 14 : 20,
+                    fontSize: MediaQuery.of(context).size.width < 768 ? 10 : 16,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.5,
                     shadows: const [
