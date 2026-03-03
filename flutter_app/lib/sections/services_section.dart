@@ -47,7 +47,7 @@ class ServicesSection extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 60),
+          const SizedBox(height: 10),
 
           // Horizontal Carousel
           SizedBox(
@@ -56,7 +56,7 @@ class ServicesSection extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               physics: const PageScrollPhysics(), // Snap scroll feel
               padding: const EdgeInsets.symmetric(horizontal: 30),
-              itemCount: 5,
+              itemCount: 8,
               itemBuilder: (context, index) {
                 final images = [
                   'assets/images/tattoo_portfolio_1_1772521412592.png',
@@ -64,6 +64,9 @@ class ServicesSection extends StatelessWidget {
                   'assets/images/realistic_tattoo_1772516370103.png',
                   'assets/images/geom_tattoo_1772516290886.png',
                   'assets/images/tattoo_about_1_1772521378042.png',
+                  'assets/images/tattoo_about_2_1772521394095.png',
+                  'assets/images/tribal_tattoo_1772516307052.png',
+                  'assets/images/hero_tattoo_bg_1772516268163.png',
                 ];
                 final labels = [
                   'Skull Realism',
@@ -71,6 +74,9 @@ class ServicesSection extends StatelessWidget {
                   'Shadowed Portrait',
                   'Geometric Flows',
                   'Full Sleeve Blackwork',
+                  'Chest Artwork',
+                  'Tribal Patterns',
+                  'Cover Up Designs',
                 ];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),

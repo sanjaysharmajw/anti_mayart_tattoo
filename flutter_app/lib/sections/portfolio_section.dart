@@ -43,8 +43,7 @@ class PortfolioSection extends StatelessWidget {
               letterSpacing: 1,
             ),
           ),
-          const SizedBox(height: 60),
-          
+          const SizedBox(height: 10),
           Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 1200),
@@ -79,6 +78,14 @@ class PortfolioSection extends StatelessWidget {
                   _GridItem(
                     image: 'assets/images/tattoo_about_1_1772521378042.png',
                     category: 'SLEEVE',
+                  ),
+                  _GridItem(
+                    image: 'assets/images/tattoo_about_2_1772521394095.png',
+                    category: 'CHEST PIECE',
+                  ),
+                  _GridItem(
+                    image: 'assets/images/hero_tattoo_bg_1772516268163.png',
+                    category: 'COVER UP',
                   ),
                 ],
               ),

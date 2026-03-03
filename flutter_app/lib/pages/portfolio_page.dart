@@ -35,7 +35,7 @@ class PortfolioPage extends StatelessWidget {
       body: Stack(
         children: [
 
-          
+        
           SafeArea(
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: isMobile ? 20 : 50, vertical: 40),
