@@ -62,7 +62,7 @@ class PortfolioSection extends StatelessWidget {
                   }
 
                   // Take up to 8 items for the main grid
-                  final displayItems = provider.portfolios.take(8).toList();
+                  final displayItems = provider.portfolios.take(10).toList();
 
                   return GridView.builder(
                     shrinkWrap: true,
