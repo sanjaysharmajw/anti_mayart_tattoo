@@ -105,7 +105,7 @@ class _FullPortfolioGrid extends StatelessWidget {
         final items = provider.portfolios.map((item) {
           final imageUrl = item.image.startsWith('http') 
               ? item.image 
-              : 'http://localhost:5000${item.image.startsWith('/') ? item.image : '/${item.image}'}';
+              : 'https://anti-mayart-tattoo.onrender.com${item.image.startsWith('/') ? item.image : '/${item.image}'}';
           // Assign random ratio for masonry look based on index or title length
           double ratio = 1.0 + (item.title.length % 3) * 0.1; 
           return _PortfolioItemData(imageUrl, item.title, ratio, isNetwork: true);

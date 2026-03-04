@@ -14,6 +14,8 @@ class PortfolioSection extends StatelessWidget {
     bool isTablet = MediaQuery.of(context).size.width >= 768 && MediaQuery.of(context).size.width < 1200;
     
     int columns = isMobile ? 3 : (isTablet ? 4 : 5);
+
+    final url = "https://anti-mayart-tattoo.onrender.com";
     
     return Container(
       color: AppTheme.bgDark, // Slight dark grey (#121212)
@@ -55,6 +57,12 @@ class PortfolioSection extends StatelessWidget {
                     return const Center(child: CircularProgressIndicator());
                   }
                   
+                  if (provider.errorMessage.isNotEmpty && provider.portfolios.isEmpty) {
+                    return Center(
+                      child: Text('Error: ${provider.errorMessage}', style: const TextStyle(color: Colors.red)),
+                    );
+                  }
+
                   if (provider.portfolios.isEmpty) {
                     return const Center(
                       child: Text('No portfolios available yet.', style: TextStyle(color: Colors.white70)),
@@ -79,7 +87,7 @@ class PortfolioSection extends StatelessWidget {
                       // Assuming imageUrl is just the filename returned or a relative path from the API
                       final imageUrl = item.image.startsWith('http') 
                           ? item.image 
-                          : 'http://localhost:5000${item.image.startsWith('/') ? item.image : '/$item.image'}';
+                          : 'https://anti-mayart-tattoo.onrender.com${item.image.startsWith('/') ? item.image : '/$item.image'}';
 
                       return _GridItem(
                         image: imageUrl,

@@ -59,6 +59,11 @@ class ServicesSection extends StatelessWidget {
                 if (provider.isLoading && provider.tattoos.isEmpty) {
                   return const Center(child: CircularProgressIndicator());
                 }
+                if (provider.errorMessage.isNotEmpty && provider.tattoos.isEmpty) {
+                  return Center(
+                    child: Text('Error: ${provider.errorMessage}', style: const TextStyle(color: Colors.red)),
+                  );
+                }
                 if (provider.tattoos.isEmpty) {
                   return const Center(
                     child: Text('No tattoos available yet.', style: TextStyle(color: Colors.white70)),
@@ -74,7 +79,7 @@ class ServicesSection extends StatelessWidget {
                     final tattoo = provider.tattoos[index];
                     final imageUrl = tattoo.image.startsWith('http') 
                         ? tattoo.image 
-                        : 'http://localhost:5000${tattoo.image.startsWith('/') ? tattoo.image : '/${tattoo.image}'}';
+                        : 'https://anti-mayart-tattoo.onrender.com${tattoo.image.startsWith('/') ? tattoo.image : '/${tattoo.image}'}';
 
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
