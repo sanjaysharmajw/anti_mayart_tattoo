@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme.dart';
 import '../pages/portfolio_page.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import '../providers/tattoo_provider.dart';
 
 class ServicesSection extends StatelessWidget {
@@ -57,7 +59,47 @@ class ServicesSection extends StatelessWidget {
             child: Consumer<TattooProvider>(
               builder: (context, provider, child) {
                 if (provider.isLoading && provider.tattoos.isEmpty) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Shimmer.fromColors(
+                    baseColor: Colors.grey[800]!,
+                    highlightColor: Colors.grey[700]!,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      itemCount: 5, // dummy count
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          child: Container(
+                            width: isMobile ? 160 : 220,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(2),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                Container(
+                                  height: 18,
+                                  width: 120,
+                                  color: Colors.white,
+                                ),
+                                const SizedBox(height: 10), // spacing matching label and line
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
                 }
                 if (provider.errorMessage.isNotEmpty && provider.tattoos.isEmpty) {
                   return Center(
@@ -70,27 +112,7 @@ class ServicesSection extends StatelessWidget {
                   );
                 }
 
-                return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  physics: const PageScrollPhysics(), // Snap scroll feel
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  itemCount: provider.tattoos.length,
-                  itemBuilder: (context, index) {
-                    final tattoo = provider.tattoos[index];
-                    final imageUrl = tattoo.image.startsWith('http') 
-                        ? tattoo.image 
-                        : 'https://anti-mayart-tattoo.onrender.com${tattoo.image.startsWith('/') ? tattoo.image : '/${tattoo.image}'}';
-
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: _CarouselItem(
-                        image: imageUrl,
-                        label: tattoo.title,
-                        isNetwork: true,
-                      ),
-                    );
-                  },
-                );
+                return _HorizontalScrollList(tattoos: provider.tattoos);
               }
             ),
           ),
@@ -224,7 +246,69 @@ class _VerMaisButtonState extends State<_VerMaisButton> {
             const Icon(Icons.arrow_forward, color: Colors.white, size: 18),
           ],
         ),
+        ),
       ),
+    );
+  }
+}
+
+class _HorizontalScrollList extends StatefulWidget {
+  final List tattoos;
+
+  const _HorizontalScrollList({required this.tattoos});
+
+  @override
+  State<_HorizontalScrollList> createState() => _HorizontalScrollListState();
+}
+
+class _HorizontalScrollListState extends State<_HorizontalScrollList> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Listener(
+      onPointerSignal: (pointerSignal) {
+        if (pointerSignal is PointerScrollEvent) {
+          final offset = pointerSignal.scrollDelta.dy;
+          if (_scrollController.hasClients) {
+            _scrollController.jumpTo(
+              (_scrollController.offset + offset).clamp(
+                0.0,
+                _scrollController.position.maxScrollExtent,
+              ),
+            );
+          }
+        }
+      },
+      child: ListView.builder(
+        controller: _scrollController,
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(
+            decelerationRate: ScrollDecelerationRate.fast,
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        itemCount: widget.tattoos.length,
+        itemBuilder: (context, index) {
+          final tattoo = widget.tattoos[index];
+          final imageUrl = tattoo.image.startsWith('http') 
+              ? tattoo.image 
+              : 'https://anti-mayart-tattoo.onrender.com${tattoo.image.startsWith('/') ? tattoo.image : '/${tattoo.image}'}';
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: _CarouselItem(
+              image: imageUrl,
+              label: tattoo.title,
+              isNetwork: true,
+            ),
+          );
+        },
       ),
     );
   }

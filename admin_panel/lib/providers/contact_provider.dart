@@ -12,7 +12,7 @@ class ContactProvider with ChangeNotifier {
   bool get isLoading => _isLoading;
   String get errorMessage => _errorMessage;
 
-  final String baseUrl = "http://localhost:5000/api";
+  final String baseUrl = "https://anti-mayart-tattoo.onrender.com/api";
 
   Future<void> fetchContacts() async {
     _isLoading = true;

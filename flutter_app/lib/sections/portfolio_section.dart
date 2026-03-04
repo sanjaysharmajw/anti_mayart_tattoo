@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../theme.dart';
 import '../pages/portfolio_page.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import '../providers/portfolio_provider.dart';
 
 class PortfolioSection extends StatelessWidget {
@@ -54,7 +55,29 @@ class PortfolioSection extends StatelessWidget {
               child: Consumer<PortfolioProvider>(
                 builder: (context, provider, child) {
                   if (provider.isLoading && provider.portfolios.isEmpty) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Shimmer.fromColors(
+                      baseColor: Colors.grey[800]!,
+                      highlightColor: Colors.grey[700]!,
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: columns,
+                          mainAxisSpacing: 20,
+                          crossAxisSpacing: 20,
+                          childAspectRatio: 0.8,
+                        ),
+                        itemCount: isMobile ? 6 : 10, // dummy count
+                        itemBuilder: (context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                          );
+                        },
+                      ),
+                    );
                   }
                   
                   if (provider.errorMessage.isNotEmpty && provider.portfolios.isEmpty) {

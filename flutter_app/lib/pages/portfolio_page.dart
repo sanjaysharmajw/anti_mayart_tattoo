@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import '../providers/portfolio_provider.dart';
 
 
@@ -93,7 +94,34 @@ class _FullPortfolioGrid extends StatelessWidget {
     return Consumer<PortfolioProvider>(
       builder: (context, provider, child) {
         if (provider.isLoading && provider.portfolios.isEmpty) {
-          return const Center(child: CircularProgressIndicator());
+          return Shimmer.fromColors(
+            baseColor: Colors.grey[800]!,
+            highlightColor: Colors.grey[700]!,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: List.generate(columns, (i) {
+                // Determine dummy heights for masonry effect
+                final heights = [200.0, 300.0, 250.0, 350.0];
+                return Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      children: List.generate(4, (j) => Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: Container(
+                          height: heights[(i + j) % heights.length],
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                      )),
+                    ),
+                  ),
+                );
+              }),
+            ),
+          );
         }
         
         if (provider.portfolios.isEmpty) {

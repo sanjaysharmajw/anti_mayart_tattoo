@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,7 @@ class AntiMayartTattooApp extends StatelessWidget {
     return MaterialApp(
       title: 'Anti Mayart Tattoo',
       debugShowCheckedModeBanner: false,
+      scrollBehavior: AppScrollBehavior(),
       theme: AppTheme.darkTheme.copyWith(
         textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme).apply(
           bodyColor: AppTheme.textPrimary,
@@ -39,4 +41,13 @@ class AntiMayartTattooApp extends StatelessWidget {
       home: const HomePage(),
     );
   }
+}
+
+class AppScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+        PointerDeviceKind.touch,
+        PointerDeviceKind.mouse,
+        PointerDeviceKind.trackpad,
+      };
 }

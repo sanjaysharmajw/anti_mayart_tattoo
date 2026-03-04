@@ -81,7 +81,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                             image: _selectedImageBytes != null
                                 ? DecorationImage(image: MemoryImage(_selectedImageBytes!), fit: BoxFit.cover)
                                 : (portfolio != null
-                                    ? DecorationImage(image: NetworkImage("http://localhost:5000${portfolio.image}"), fit: BoxFit.cover)
+                                    ? DecorationImage(image: NetworkImage("https://anti-mayart-tattoo.onrender.com${portfolio.image}"), fit: BoxFit.cover)
                                     : null),
                           ),
                           child: (_selectedImageBytes == null && portfolio == null)
@@ -260,7 +260,7 @@ class _HoverPortfolioCardState extends State<HoverPortfolioCard> {
                 fit: StackFit.expand,
                 children: [
                   Image.network(
-                    "http://localhost:5000${widget.portfolio.image}",
+                    "https://anti-mayart-tattoo.onrender.com${widget.portfolio.image}",
                     fit: BoxFit.cover,
                     errorBuilder: (ctx, err, stack) => const Icon(Icons.broken_image, size: 50, color: Colors.grey),
                   ),

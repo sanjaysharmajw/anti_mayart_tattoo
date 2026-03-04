@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import '../providers/about_provider.dart';
 
 class ArtistSection extends StatefulWidget {
@@ -79,8 +80,48 @@ class _ArtistSectionState extends State<ArtistSection> with SingleTickerProvider
                   builder: (context) {
                     final textContent = Consumer<AboutProvider>(
                       builder: (context, provider, child) {
-                        if (provider.isLoading) {
-                          return const Center(child: CircularProgressIndicator());
+                        if (provider.isLoading && provider.abouts.isEmpty) {
+                          return Shimmer.fromColors(
+                            baseColor: Colors.grey[800]!,
+                            highlightColor: Colors.grey[700]!,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  height: isMobile ? 48 : 60,
+                                  width: 250,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                Container(
+                                  height: 3,
+                                  width: 100,
+                                  color: Colors.white,
+                                ),
+                                const SizedBox(height: 40),
+                                Container(
+                                  height: 16,
+                                  width: double.infinity,
+                                  color: Colors.white,
+                                ),
+                                const SizedBox(height: 10),
+                                Container(
+                                  height: 16,
+                                  width: double.infinity,
+                                  color: Colors.white,
+                                ),
+                                const SizedBox(height: 10),
+                                Container(
+                                  height: 16,
+                                  width: isMobile ? 200 : 300,
+                                  color: Colors.white,
+                                ),
+                              ],
+                            ),
+                          );
                         }
                         
                         // If we have data, show the first item, else show default

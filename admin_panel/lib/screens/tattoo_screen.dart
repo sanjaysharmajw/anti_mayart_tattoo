@@ -81,7 +81,7 @@ class _TattooScreenState extends State<TattooScreen> {
                             image: _selectedImageBytes != null
                                 ? DecorationImage(image: MemoryImage(_selectedImageBytes!), fit: BoxFit.cover)
                                 : (tattoo != null
-                                    ? DecorationImage(image: NetworkImage("http://localhost:5000${tattoo.image}"), fit: BoxFit.cover)
+                                    ? DecorationImage(image: NetworkImage("https://anti-mayart-tattoo.onrender.com${tattoo.image}"), fit: BoxFit.cover)
                                     : null),
                           ),
                           child: (_selectedImageBytes == null && tattoo == null)
@@ -260,7 +260,7 @@ class _HoverTattooCardState extends State<HoverTattooCard> {
                 fit: StackFit.expand,
                 children: [
                   Image.network(
-                    "http://localhost:5000${widget.tattoo.image}",
+                    "https://anti-mayart-tattoo.onrender.com${widget.tattoo.image}",
                     fit: BoxFit.cover,
                     errorBuilder: (ctx, err, stack) => const Icon(Icons.broken_image, size: 50, color: Colors.grey),
                   ),
