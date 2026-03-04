@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme.dart';
+import 'package:provider/provider.dart';
+import '../providers/portfolio_provider.dart';
 
 
 class PortfolioPage extends StatelessWidget {
@@ -88,39 +90,50 @@ class _FullPortfolioGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // List of standard items
-    final items = [
-      _PortfolioItemData('assets/images/tattoo_portfolio_1_1772521412592.png', 'DARK REALISM', 1.0),
-      _PortfolioItemData('assets/images/tattoo_portfolio_2_1772521428566.png', 'FINE LINE', 1.3),
-      _PortfolioItemData('assets/images/geom_tattoo_1772516290886.png', 'GEOMETRIC', 1.0),
-      _PortfolioItemData('assets/images/realistic_tattoo_1772516370103.png', 'PORTRAIT', 1.2),
-      _PortfolioItemData('assets/images/tribal_tattoo_1772516307052.png', 'BLACKWORK', 1.1),
-      _PortfolioItemData('assets/images/tattoo_about_1_1772521378042.png', 'SLEEVE', 1.0),
-      _PortfolioItemData('assets/images/tattoo_about_2_1772521394095.png', 'CHEST PIECE', 1.1),
-      _PortfolioItemData('assets/images/hero_tattoo_bg_1772516268163.png', 'COVER UP', 1.0),
-    ];
+    return Consumer<PortfolioProvider>(
+      builder: (context, provider, child) {
+        if (provider.isLoading && provider.portfolios.isEmpty) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        
+        if (provider.portfolios.isEmpty) {
+          return const Center(
+            child: Text('No portfolios available yet.', style: TextStyle(color: Colors.white70)),
+          );
+        }
 
-    List<List<_PortfolioItemData>> columnItems = List.generate(columns, (_) => []);
-    
-    for (int i = 0; i < items.length; i++) {
-        columnItems[i % columns].add(items[i]);
-    }
+        final items = provider.portfolios.map((item) {
+          final imageUrl = item.image.startsWith('http') 
+              ? item.image 
+              : 'http://localhost:5000${item.image.startsWith('/') ? item.image : '/${item.image}'}';
+          // Assign random ratio for masonry look based on index or title length
+          double ratio = 1.0 + (item.title.length % 3) * 0.1; 
+          return _PortfolioItemData(imageUrl, item.title, ratio, isNetwork: true);
+        }).toList();
 
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: List.generate(columns, (i) {
-        return Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              children: columnItems[i].map((e) => Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: _PortfolioCard(item: e),
-              )).toList(),
-            ),
-          ),
+        List<List<_PortfolioItemData>> columnItems = List.generate(columns, (_) => []);
+        
+        for (int i = 0; i < items.length; i++) {
+            columnItems[i % columns].add(items[i]);
+        }
+
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: List.generate(columns, (i) {
+            return Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  children: columnItems[i].map((e) => Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: _PortfolioCard(item: e),
+                  )).toList(),
+                ),
+              ),
+            );
+          }),
         );
-      }),
+      }
     );
   }
 }
@@ -129,7 +142,8 @@ class _PortfolioItemData {
   final String image;
   final String category;
   final double ratio;
-  _PortfolioItemData(this.image, this.category, this.ratio);
+  final bool isNetwork;
+  _PortfolioItemData(this.image, this.category, this.ratio, {this.isNetwork = false});
 }
 
 class _PortfolioCard extends StatefulWidget {
@@ -185,10 +199,16 @@ class _PortfolioCardState extends State<_PortfolioCard> {
                   duration: const Duration(milliseconds: 600),
                   scale: _isHovering ? 1.08 : 1.0,
                   curve: Curves.easeOutCubic,
-                  child: Image.asset(
-                    widget.item.image,
-                    fit: BoxFit.cover,
-                  ),
+                  child: widget.item.isNetwork 
+                      ? Image.network(
+                          widget.item.image,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) => Container(color: Colors.grey[900], child: const Icon(Icons.broken_image, color: Colors.white54)),
+                        )
+                      : Image.asset(
+                          widget.item.image,
+                          fit: BoxFit.cover,
+                        ),
                 ),
                 
                 // Gradient Overlay

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme.dart';
 import '../pages/portfolio_page.dart';
+import 'package:provider/provider.dart';
+import '../providers/tattoo_provider.dart';
 
 class ServicesSection extends StatelessWidget {
   const ServicesSection({super.key});
@@ -52,40 +54,39 @@ class ServicesSection extends StatelessWidget {
           // Horizontal Carousel
           SizedBox(
             height: isMobile ? 250 : 350,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              physics: const PageScrollPhysics(), // Snap scroll feel
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              itemCount: 8,
-              itemBuilder: (context, index) {
-                final images = [
-                  'assets/images/tattoo_portfolio_1_1772521412592.png',
-                  'assets/images/tattoo_portfolio_2_1772521428566.png',
-                  'assets/images/realistic_tattoo_1772516370103.png',
-                  'assets/images/geom_tattoo_1772516290886.png',
-                  'assets/images/tattoo_about_1_1772521378042.png',
-                  'assets/images/tattoo_about_2_1772521394095.png',
-                  'assets/images/tribal_tattoo_1772516307052.png',
-                  'assets/images/hero_tattoo_bg_1772516268163.png',
-                ];
-                final labels = [
-                  'Skull Realism',
-                  'Fine Line Details',
-                  'Shadowed Portrait',
-                  'Geometric Flows',
-                  'Full Sleeve Blackwork',
-                  'Chest Artwork',
-                  'Tribal Patterns',
-                  'Cover Up Designs',
-                ];
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: _CarouselItem(
-                    image: images[index],
-                    label: labels[index],
-                  ),
+            child: Consumer<TattooProvider>(
+              builder: (context, provider, child) {
+                if (provider.isLoading && provider.tattoos.isEmpty) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (provider.tattoos.isEmpty) {
+                  return const Center(
+                    child: Text('No tattoos available yet.', style: TextStyle(color: Colors.white70)),
+                  );
+                }
+
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  physics: const PageScrollPhysics(), // Snap scroll feel
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  itemCount: provider.tattoos.length,
+                  itemBuilder: (context, index) {
+                    final tattoo = provider.tattoos[index];
+                    final imageUrl = tattoo.image.startsWith('http') 
+                        ? tattoo.image 
+                        : 'http://localhost:5000${tattoo.image.startsWith('/') ? tattoo.image : '/${tattoo.image}'}';
+
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: _CarouselItem(
+                        image: imageUrl,
+                        label: tattoo.title,
+                        isNetwork: true,
+                      ),
+                    );
+                  },
                 );
-              },
+              }
             ),
           ),
           
@@ -102,8 +103,9 @@ class ServicesSection extends StatelessWidget {
 class _CarouselItem extends StatefulWidget {
   final String image;
   final String label;
+  final bool isNetwork;
 
-  const _CarouselItem({required this.image, required this.label});
+  const _CarouselItem({required this.image, required this.label, this.isNetwork = false});
 
   @override
   State<_CarouselItem> createState() => _CarouselItemState();
@@ -133,11 +135,18 @@ class _CarouselItemState extends State<_CarouselItem> {
                   duration: const Duration(milliseconds: 600),
                   scale: _isHovering ? 1.05 : 1.0,
                   curve: Curves.easeOutCubic,
-                  child: Image.asset(
-                    widget.image,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  ),
+                  child: widget.isNetwork 
+                      ? Image.network(
+                          widget.image,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          errorBuilder: (context, error, stackTrace) => Container(color: Colors.grey[900], child: const Icon(Icons.broken_image, color: Colors.white54)),
+                        )
+                      : Image.asset(
+                          widget.image,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                        ),
                 ),
               ),
             ),

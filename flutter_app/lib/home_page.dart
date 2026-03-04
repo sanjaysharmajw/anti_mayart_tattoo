@@ -9,6 +9,10 @@ import 'sections/testimonials_section.dart';
 import 'sections/footer_section.dart';
 import 'dart:math' as math; // Add math
 import 'dart:ui';
+import 'package:provider/provider.dart';
+import 'providers/about_provider.dart';
+import 'providers/portfolio_provider.dart';
+import 'providers/tattoo_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -43,6 +47,11 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<AboutProvider>(context, listen: false).fetchAbout();
+      Provider.of<PortfolioProvider>(context, listen: false).fetchPortfolio();
+      Provider.of<TattooProvider>(context, listen: false).fetchTattoo();
+    });
     _scrollController.addListener(() {
       if (_scrollController.offset > 50 && !_isScrolled) {
         setState(() => _isScrolled = true);

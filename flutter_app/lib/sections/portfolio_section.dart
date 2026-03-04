@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme.dart';
 import '../pages/portfolio_page.dart';
+import 'package:provider/provider.dart';
+import '../providers/portfolio_provider.dart';
 
 class PortfolioSection extends StatelessWidget {
   const PortfolioSection({super.key});
@@ -47,47 +49,46 @@ class PortfolioSection extends StatelessWidget {
           Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 1200),
-              child: GridView.count(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: columns,
-                mainAxisSpacing: 20,
-                crossAxisSpacing: 20,
-                childAspectRatio: 0.8,
-                children: const [
-                  _GridItem(
-                    image: 'assets/images/tattoo_portfolio_1_1772521412592.png',
-                    category: 'DARK REALISM',
-                  ),
-                  _GridItem(
-                    image: 'assets/images/tattoo_portfolio_2_1772521428566.png',
-                    category: 'FINE LINE',
-                  ),
-                  _GridItem(
-                    image: 'assets/images/geom_tattoo_1772516290886.png',
-                    category: 'GEOMETRIC',
-                  ),
-                  _GridItem(
-                    image: 'assets/images/realistic_tattoo_1772516370103.png',
-                    category: 'PORTRAIT',
-                  ),
-                  _GridItem(
-                    image: 'assets/images/tribal_tattoo_1772516307052.png',
-                    category: 'BLACKWORK',
-                  ),
-                  _GridItem(
-                    image: 'assets/images/tattoo_about_1_1772521378042.png',
-                    category: 'SLEEVE',
-                  ),
-                  _GridItem(
-                    image: 'assets/images/tattoo_about_2_1772521394095.png',
-                    category: 'CHEST PIECE',
-                  ),
-                  _GridItem(
-                    image: 'assets/images/hero_tattoo_bg_1772516268163.png',
-                    category: 'COVER UP',
-                  ),
-                ],
+              child: Consumer<PortfolioProvider>(
+                builder: (context, provider, child) {
+                  if (provider.isLoading && provider.portfolios.isEmpty) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  
+                  if (provider.portfolios.isEmpty) {
+                    return const Center(
+                      child: Text('No portfolios available yet.', style: TextStyle(color: Colors.white70)),
+                    );
+                  }
+
+                  // Take up to 8 items for the main grid
+                  final displayItems = provider.portfolios.take(8).toList();
+
+                  return GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: columns,
+                      mainAxisSpacing: 20,
+                      crossAxisSpacing: 20,
+                      childAspectRatio: 0.8,
+                    ),
+                    itemCount: displayItems.length,
+                    itemBuilder: (context, index) {
+                      final item = displayItems[index];
+                      // Assuming imageUrl is just the filename returned or a relative path from the API
+                      final imageUrl = item.image.startsWith('http') 
+                          ? item.image 
+                          : 'http://localhost:5000${item.image.startsWith('/') ? item.image : '/$item.image'}';
+
+                      return _GridItem(
+                        image: imageUrl,
+                        category: item.title.toUpperCase(),
+                        isNetwork: true,
+                      );
+                    },
+                  );
+                }
               ),
             ),
           ),
@@ -157,10 +158,12 @@ class _VerMaisButtonState extends State<_VerMaisButton> {
 class _GridItem extends StatefulWidget {
   final String image;
   final String category;
+  final bool isNetwork;
 
   const _GridItem({
     required this.image,
     required this.category,
+    this.isNetwork = false,
   });
 
   @override
@@ -206,10 +209,16 @@ class _GridItemState extends State<_GridItem> {
               duration: const Duration(milliseconds: 600),
               scale: _isHovering ? 1.05 : 1.0,
               curve: Curves.easeOutCubic,
-              child: Image.asset(
-                widget.image,
-                fit: BoxFit.cover,
-              ),
+              child: widget.isNetwork 
+                  ? Image.network(
+                      widget.image,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Container(color: Colors.grey[900], child: const Icon(Icons.broken_image, color: Colors.white54)),
+                    )
+                  : Image.asset(
+                      widget.image,
+                      fit: BoxFit.cover,
+                    ),
             ),
             
             // Dark Overlay Gradient Fade On Hover

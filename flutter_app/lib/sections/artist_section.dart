@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme.dart';
+import 'package:provider/provider.dart';
+import '../providers/about_provider.dart';
 
 class ArtistSection extends StatefulWidget {
   const ArtistSection({super.key});
@@ -75,63 +77,65 @@ class _ArtistSectionState extends State<ArtistSection> with SingleTickerProvider
                 // Right Side: Text & Info
                 Builder(
                   builder: (context) {
-                    final textContent = Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'ABOUT',
-                          style: GoogleFonts.outfit(
-                            fontSize: isMobile ? 32 : 48,
-                            fontWeight: FontWeight.w900,
-                            color: Colors.white,
-                            letterSpacing: 4,
-                            shadows: [
-                              BoxShadow(
-                                color: AppTheme.accentColor.withOpacity(0.4),
-                                blurRadius: 20,
-                              )
-                            ]
-                          ),
-                        ),
-                        const SizedBox(height: 20),
+                    final textContent = Consumer<AboutProvider>(
+                      builder: (context, provider, child) {
+                        if (provider.isLoading) {
+                          return const Center(child: CircularProgressIndicator());
+                        }
                         
-                        // Divider line with subtle glow
-                        Container(
-                          height: 3,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: AppTheme.accentColor,
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppTheme.accentColor.withOpacity(0.8),
-                                blurRadius: 15,
-                              )
-                            ],
-                            borderRadius: BorderRadius.circular(2),
-                          ),
-                        ),
-                        const SizedBox(height: 40),
-                        
-                        Text(
-                          'With over a decade of experience, Moses Valerius leads the art of transforming stories and feelings into ink. The studio offers a luxurious environment, focusing on technical precision and service that values comfort.',
-                          style: GoogleFonts.inter(
-                            fontSize: isMobile ? 14 : 16,
-                            color: Colors.white,
-                            height: 1.8,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          'We believe every tattoo is a masterpiece, developed with the highest quality materials and an unparalleled artistic eye. Our mission is to immortalize your journey on the skin with innovative design.',
-                          style: GoogleFonts.inter(
-                            fontSize: isMobile ? 14 : 16,
-                            color: Colors.white,
-                            height: 1.8,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
+                        // If we have data, show the first item, else show default
+                        final title = provider.abouts.isNotEmpty ? provider.abouts.first.title.toUpperCase() : 'ABOUT';
+                        final desc = provider.abouts.isNotEmpty ? provider.abouts.first.description : 'With over a decade of experience...';
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              title,
+                              style: GoogleFonts.outfit(
+                                fontSize: isMobile ? 32 : 48,
+                                fontWeight: FontWeight.w900,
+                                color: Colors.white,
+                                letterSpacing: 4,
+                                shadows: [
+                                  BoxShadow(
+                                    color: AppTheme.accentColor.withOpacity(0.4),
+                                    blurRadius: 20,
+                                  )
+                                ]
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            
+                            // Divider line with subtle glow
+                            Container(
+                              height: 3,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                color: AppTheme.accentColor,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppTheme.accentColor.withOpacity(0.8),
+                                    blurRadius: 15,
+                                  )
+                                ],
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                            ),
+                            const SizedBox(height: 40),
+                            
+                            Text(
+                              desc,
+                              style: GoogleFonts.inter(
+                                fontSize: isMobile ? 14 : 16,
+                                color: Colors.white,
+                                height: 1.8,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        );
+                      }
                     );
                     return isMobile ? textContent : Expanded(child: textContent);
                   }
